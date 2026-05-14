@@ -20,7 +20,7 @@ const items = [
 
 export function Testimonials() {
   return (
-    <section className="py-32">
+    <section className="py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-2xl">
           <p className="text-xs uppercase tracking-[0.3em] text-primary font-medium">Loved by operators</p>

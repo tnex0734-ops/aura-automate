@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 
 export function CTA() {
   return (
-    <section id="cta" className="py-32 relative overflow-hidden">
+    <section id="cta" className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-mesh)" }} />
       <div className="mx-auto max-w-5xl px-6 text-center">
         <h2 className="font-bold tracking-[-0.04em] leading-[0.95] text-[clamp(2.5rem,7vw,5.5rem)]">

@@ -4,7 +4,7 @@ import { TrendingUp, Users, MessageSquare, Activity } from "lucide-react";
 export function DashboardSection() {
   const bars = [40, 65, 50, 80, 60, 90, 75, 95, 70, 85, 60, 78];
   return (
-    <section className="py-32 relative overflow-hidden">
+    <section className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 -z-10 grid-bg radial-fade opacity-50" />
 
       <div className="mx-auto max-w-6xl px-6">
