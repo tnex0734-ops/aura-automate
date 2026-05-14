@@ -16,7 +16,7 @@ const platforms = [
 
 export function Integrations() {
   return (
-    <section id="platform" className="py-32 relative overflow-hidden">
+    <section id="platform" className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-mesh)" }} />
 
       <div className="mx-auto max-w-6xl px-6">
