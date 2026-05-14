@@ -1,26 +1,42 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Nav } from "@/components/site/Nav";
+import { Hero } from "@/components/site/Hero";
+import { Logos } from "@/components/site/Logos";
+import { Showcase } from "@/components/site/Showcase";
+import { Integrations } from "@/components/site/Integrations";
+import { DashboardSection } from "@/components/site/Dashboard";
+import { WorkflowSection } from "@/components/site/Workflow";
+import { Testimonials } from "@/components/site/Testimonials";
+import { Pricing } from "@/components/site/Pricing";
+import { CTA } from "@/components/site/CTA";
+import { Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Nova.ai — Your AI Co-Pilot for Social Media Automation" },
+      { name: "description", content: "Nova orchestrates conversations, campaigns and conversions across every channel — powered by an AI that learns your brand voice and never sleeps." },
+      { property: "og:title", content: "Nova.ai — AI Co-Pilot for Social Media Automation" },
+      { property: "og:description", content: "Autonomous engagement across WhatsApp, Instagram, Facebook, LinkedIn and more." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
 function Index() {
-  return <PlaceholderIndex />;
+  return (
+    <main className="relative">
+      <Nav />
+      <Hero />
+      <Logos />
+      <Showcase />
+      <Integrations />
+      <DashboardSection />
+      <WorkflowSection />
+      <Testimonials />
+      <Pricing />
+      <CTA />
+      <Footer />
+    </main>
+  );
 }
