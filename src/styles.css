@@ -185,12 +185,12 @@
   }
 
   .pill-highlight {
-    background: var(--primary);
-    color: var(--primary-foreground);
-    padding: 0.05em 0.35em;
-    border-radius: 0.4em;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
+    font-style: italic;
+    background: linear-gradient(135deg, var(--primary), var(--primary-glow));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding: 0 0.04em;
   }
 
   .marquee {
