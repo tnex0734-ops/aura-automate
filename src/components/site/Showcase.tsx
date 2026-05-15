@@ -204,34 +204,47 @@ export function Showcase() {
           {exhibits.map((e, i) => (
             <motion.div
               key={e.title}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, delay: i * 0.06 }}
-              className="group relative rounded-3xl border border-border bg-surface p-6 overflow-hidden hover:shadow-float transition-all duration-500 min-h-[340px]"
+              viewport={{ margin: "-80px" }}
+              transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -6 }}
+              className="group relative rounded-3xl glass p-6 overflow-hidden hover:shadow-float transition-all duration-500 min-h-[340px]"
             >
-              <div className="absolute -top-24 -right-24 size-72 rounded-full bg-primary/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute -top-24 -right-24 size-72 rounded-full bg-primary/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute -bottom-24 -left-24 size-72 rounded-full bg-primary-glow/15 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
               <div className="relative grid grid-cols-1 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-5 h-full">
                 {/* Left: text */}
                 <div className="flex flex-col">
-                  <div className="grid place-items-center size-11 rounded-2xl bg-primary/10 text-primary mb-6">
+                  <motion.div
+                    whileHover={{ rotate: -8, scale: 1.08 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 18 }}
+                    className="grid place-items-center size-11 rounded-2xl bg-primary/10 text-primary mb-6 group-hover:bg-primary/20 group-hover:shadow-glow transition-all"
+                  >
                     <e.Icon className="size-5" />
-                  </div>
+                  </motion.div>
                   <h3 className="text-2xl tracking-tight leading-tight">{e.title}</h3>
                   <p className="mt-3 text-sm text-muted-foreground font-sans">{e.desc}</p>
                   <div className="mt-auto pt-6">
-                    <button
+                    <motion.button
+                      whileHover={{ x: 4, scale: 1.08 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 15 }}
                       aria-label={`Learn more about ${e.title}`}
-                      className="grid place-items-center size-10 rounded-full border border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+                      className="grid place-items-center size-10 rounded-full border border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground hover:shadow-glow transition-colors"
                     >
                       <ArrowRight className="size-4" />
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
                 {/* Right: preview */}
-                <div className="relative h-56 md:h-auto md:min-h-[260px]">
+                <motion.div
+                  whileHover={{ scale: 1.03, rotate: -0.6 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 18 }}
+                  className="relative h-56 md:h-auto md:min-h-[260px] [&>div]:transition-all [&>div]:duration-500 group-hover:[&>div]:shadow-float group-hover:[&>div]:border-primary/30"
+                >
                   <e.Preview />
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           ))}
