@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "motion/react";
 import {
   MessageSquare, Boxes, BarChart3, Users, ArrowRight,
   Zap, Sparkles, Clock, Send, UserCheck, Flame, AlertTriangle, UserPlus, ShoppingBag, PackageSearch,
