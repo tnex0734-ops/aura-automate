@@ -135,7 +135,9 @@
   h1, h2, h3, h4, .font-display {
     font-family: var(--font-display);
     font-weight: 400;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.035em;
+    font-optical-sizing: auto;
+    font-variation-settings: "opsz" 144, "SOFT" 50;
     font-synthesis: none;
   }
 
