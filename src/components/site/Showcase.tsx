@@ -186,6 +186,117 @@ const exhibits = [
   { Icon: Users, title: "Smart Audience Segments", desc: "Let AI cluster your audience by intent, sentiment and lifecycle stage.", Preview: AudiencePreview },
 ];
 
+type Exhibit = (typeof exhibits)[number];
+
+function ExhibitCard({ exhibit, index }: { exhibit: Exhibit; index: number }) {
+  const mx = useMotionValue(0.5);
+  const my = useMotionValue(0.5);
+  const sx = useSpring(mx, { stiffness: 120, damping: 18, mass: 0.4 });
+  const sy = useSpring(my, { stiffness: 120, damping: 18, mass: 0.4 });
+
+  // Tilt
+  const rotateX = useTransform(sy, [0, 1], [6, -6]);
+  const rotateY = useTransform(sx, [0, 1], [-8, 8]);
+  // Inner parallax (preview floats slightly)
+  const tx = useTransform(sx, [0, 1], [-10, 10]);
+  const ty = useTransform(sy, [0, 1], [-8, 8]);
+  // Light sweep position (% of card)
+  const lx = useTransform(sx, (v: number) => `${v * 100}%`);
+  const ly = useTransform(sy, (v: number) => `${v * 100}%`);
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width);
+    my.set((e.clientY - r.top) / r.height);
+  };
+  const onLeave = () => {
+    mx.set(0.5);
+    my.set(0.5);
+  };
+
+  const e = exhibit;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ margin: "-80px" }}
+      transition={{ duration: 0.7, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      style={{ rotateX, rotateY, transformPerspective: 1200, transformStyle: "preserve-3d" }}
+      className="group relative rounded-3xl glass p-6 overflow-hidden hover:shadow-float transition-shadow duration-500 min-h-[340px] will-change-transform"
+    >
+      {/* Cursor-following spotlight */}
+      <MouseSpotlight x={lx as MotionValue<string>} y={ly as MotionValue<string>} />
+
+      {/* Light sweep (diagonal sheen on hover) */}
+      <div
+        className="pointer-events-none absolute -inset-px overflow-hidden rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        aria-hidden
+      >
+        <div className="absolute -inset-y-10 -left-1/2 w-1/2 rotate-12 bg-gradient-to-r from-transparent via-white/35 to-transparent blur-md translate-x-[-120%] group-hover:translate-x-[420%] transition-transform duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]" />
+      </div>
+
+      {/* Ambient blobs */}
+      <div className="absolute -top-24 -right-24 size-72 rounded-full bg-primary/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      <div className="absolute -bottom-24 -left-24 size-72 rounded-full bg-primary-glow/15 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+
+      <div
+        className="relative grid grid-cols-1 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-5 h-full"
+        style={{ transform: "translateZ(40px)" }}
+      >
+        {/* Left: text */}
+        <div className="flex flex-col">
+          <motion.div
+            whileHover={{ rotate: -8, scale: 1.08 }}
+            transition={{ type: "spring", stiffness: 300, damping: 18 }}
+            className="grid place-items-center size-11 rounded-2xl bg-primary/10 text-primary mb-6 group-hover:bg-primary/20 group-hover:shadow-glow transition-all"
+          >
+            <e.Icon className="size-5" />
+          </motion.div>
+          <h3 className="text-2xl tracking-tight leading-tight">{e.title}</h3>
+          <p className="mt-3 text-sm text-muted-foreground font-sans">{e.desc}</p>
+          <div className="mt-auto pt-6">
+            <motion.button
+              whileHover={{ x: 4, scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 15 }}
+              aria-label={`Learn more about ${e.title}`}
+              className="grid place-items-center size-10 rounded-full border border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground hover:shadow-glow transition-colors"
+            >
+              <ArrowRight className="size-4" />
+            </motion.button>
+          </div>
+        </div>
+
+        {/* Right: preview with parallax drift */}
+        <motion.div
+          style={{ x: tx, y: ty }}
+          className="relative h-56 md:h-auto md:min-h-[260px] [&>div]:transition-all [&>div]:duration-500 group-hover:[&>div]:shadow-float group-hover:[&>div]:border-primary/30"
+        >
+          <e.Preview />
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
+function MouseSpotlight({ x, y }: { x: MotionValue<string>; y: MotionValue<string> }) {
+  const background = useTransform(
+    [x, y] as unknown as MotionValue<string>[],
+    ([px, py]: string[]) =>
+      `radial-gradient(420px circle at ${px} ${py}, color-mix(in oklab, var(--primary) 22%, transparent), transparent 60%)`
+  );
+  return (
+    <motion.div
+      aria-hidden
+      style={{ background }}
+      className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-plus-lighter"
+    />
+  );
+}
+
 export function Showcase() {
   return (
     <section id="features" className="py-24 md:py-32 relative">
